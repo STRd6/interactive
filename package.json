@@ -1,0 +1,28 @@
+{
+  "name": "interactive",
+  "version": "0.5.0",
+  "description": "Interactive documentation based on Docco.",
+  "main": "dist/interactive.js",
+  "scripts": {
+    "prepublish": "script/prepublish",
+    "test": "script/test"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/STRd6/interactive"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.3",
+    "uglify-js": "~2.3.6",
+    "docco": "~0.6.2",
+    "browserify": "~2.26.0"
+  },
+  "author": "STRd6",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/STRd6/interactive/issues"
+  }
+}
