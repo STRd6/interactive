@@ -22,7 +22,9 @@ The shebang determines what interactive renderer to run, but is not displayed in
 the editor.
 
 >     #! echo
->     "I'm an example"
+>     "I'm an example that echos " +
+>     "the result of JavaScript " +
+>     "code."
 
 ----
 
