@@ -7,19 +7,31 @@ interact with the systems in context. So let's do that.
 This interactive documentation is meant to run on an html page and depends on
 having access to Zepto or jQuery.
 
-Example
--------
+----
 
 A regular non-interactive block quote looks like this:
 
 >     # A regular blockquoted text, won't be interactive
 
-An interactive example looks like this:
+----
+
+An interactive example is blockquoted code with a shebang
+on the first line.
+
+The shebang determines what interactive renderer to run, but is not displayed in
+the editor.
 
 >     #! echo
 >     "I'm an example"
 
-    "fake code block for example section"
+----
+
+Another example illustrating the CoffeeScript compiler.
+
+>     #! coffee
+>     (x) -> x * x
+
+----
 
 Implementation
 --------------
@@ -149,6 +161,10 @@ pre tag.
     Interactive.register "echo", (source, parent) ->
       parent.empty().append $ "<pre>",
         text: eval(source)
+
+    Interactive.register "coffee", (source, parent) ->
+      parent.empty().append $ "<pre>",
+        text: CoffeeScript.compile(source, bare: true)
 
 We probably want to let whoever includes this call init after they register
 their runners.

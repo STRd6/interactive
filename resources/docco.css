@@ -208,7 +208,6 @@ ul.sections > li > div {
     overflow-x:auto;
     -webkit-box-shadow: inset 0 0 5px #e5e5ee;
     box-shadow: inset 0 0 5px #e5e5ee;
-    border: 1px solid #dedede;
     padding-bottom: 5px;
   }
 
@@ -304,7 +303,6 @@ ul.sections > li > div {
   ul.sections > li > div.content {
     padding: 13px;
     vertical-align: top;
-    border: none;
     -webkit-box-shadow: none;
     box-shadow: none;
   }
@@ -504,8 +502,16 @@ pre .tex .formula {
   box-sizing: border-box;
 }
 
-#container .example .annotation{
-  min-width: 250px;
+.example .content {
+  background-color: white;
+  border: 1px solid #e5e5ee;
+  border-left: 0;
+  min-height: 218px;
+  width: 100%;
+}
+
+.example {
+  overflow: hidden;
 }
 
 p.error {
