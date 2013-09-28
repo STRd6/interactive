@@ -21,7 +21,7 @@
               <h1 id="interactive-documentation">Interactive Documentation</h1>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -46,7 +46,7 @@ JavaScript code into the output area on the right.</p>
 <hr>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -66,7 +66,7 @@ compiler on the given code.</p>
 <hr>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -85,7 +85,7 @@ the editor.</p>
 <hr>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -104,7 +104,7 @@ simply remains as blockquoted text.</code></pre>
 <hr>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -118,7 +118,7 @@ simply remains as blockquoted text.</code></pre>
               <h2 id="registering-handlers">Registering handlers</h2>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -141,7 +141,7 @@ Interactive.register &quot;echo&quot;, ({source, runtimeElement}) -&gt;
 <hr>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -162,7 +162,7 @@ Interactive.register &quot;coffee&quot;, ({source, runtimeElement}) -&gt;
 <hr>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -179,7 +179,7 @@ your project.</p>
 <h2 id="implementation">Implementation</h2>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -203,22 +203,22 @@ and a runtime element where the output can be reported or visualized in real
 time.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">createEditor = (code, shebang, section) -&gt;
-  exampleSection = $ &quot;&lt;li&gt;&quot;,
-    class: &quot;example&quot;
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">createEditor</span></span> = (code, shebang, section) -&gt;
+  exampleSection = $ <span class="string">"&lt;li&gt;"</span>,
+    class: <span class="string">"example"</span>
 
-  annotationElement = $ &quot;&lt;div&gt;&quot;,
-    class: &quot;annotation&quot;
+  annotationElement = $ <span class="string">"&lt;div&gt;"</span>,
+    class: <span class="string">"annotation"</span>
 
-  editorElement = $ &quot;&lt;textarea&gt;&quot;,
-    class: &quot;annotation&quot;
+  editorElement = $ <span class="string">"&lt;textarea&gt;"</span>,
+    class: <span class="string">"annotation"</span>
     text: code
 
-  contentElement = $ &quot;&lt;div&gt;&quot;,
-    class: &quot;content&quot;
+  contentElement = $ <span class="string">"&lt;div&gt;"</span>,
+    class: <span class="string">"content"</span>
 
-  runtimeElement = $ &quot;&lt;div&gt;&quot;,
-    class: &quot;output&quot;
+  runtimeElement = $ <span class="string">"&lt;div&gt;"</span>,
+    class: <span class="string">"output"</span>
 
   contentElement.append(runtimeElement)
 
@@ -242,19 +242,19 @@ time.</p>
 instantly.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">bindUpdates = (shebang, editorElement, runtimeElement) -&gt;
-  editorElement.on &quot;keyup&quot;, -&gt;
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">bindUpdates</span></span> = (shebang, editorElement, runtimeElement) -&gt;
+  editorElement.<span class="literal">on</span> <span class="string">"keyup"</span>, -&gt;
     report = ErrorReporter(editorElement)
     source = editorElement.val()
 
-    try
+    <span class="keyword">try</span>
       runners[shebang]({
         editorElement
         source
         runtimeElement
       })
       report.clear()
-    catch e
+    <span class="keyword">catch</span> e
       report(e)</code></pre>
 </div>
         </li>
@@ -268,9 +268,9 @@ instantly.</p>
               <p>A helper to pull the <code>shebang</code> from the sample code areas.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">readShebang = (source) -&gt;
-  if match = (source.match /^\#\! (.*)\n/)
-    match[1]</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">readShebang</span></span> = (source) -&gt;
+  <span class="keyword">if</span> match = (source.match <span class="regexp">/^\#\! (.*)\n/</span>)
+    match[<span class="number">1</span>]</code></pre>
 </div>
         </li>
         
@@ -284,22 +284,22 @@ instantly.</p>
 editor area.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">ErrorReporter = (editor) -&gt;
-  reporter = (error) -&gt;
-    if editor.next().is(&quot;p.error&quot;)
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">ErrorReporter</span></span> = (editor) -&gt;
+  <span class="function"><span class="title">reporter</span></span> = (error) -&gt;
+    <span class="keyword">if</span> editor.next().<span class="keyword">is</span>(<span class="string">"p.error"</span>)
       editor.next().text(error)
-    else
-      errorParagraph = $ &quot;&lt;p&gt;&quot;,
-        class: &quot;error&quot;
+    <span class="keyword">else</span>
+      errorParagraph = $ <span class="string">"&lt;p&gt;"</span>,
+        class: <span class="string">"error"</span>
         text: error.toString()
 
       editor.after(errorParagraph)
 
-  reporter.clear = -&gt;
-    if editor.next().is(&quot;p.error&quot;)
+  reporter.<span class="function"><span class="title">clear</span></span> = -&gt;
+    <span class="keyword">if</span> editor.next().<span class="keyword">is</span>(<span class="string">"p.error"</span>)
       editor.next().remove()
 
-  return reporter</code></pre>
+  <span class="keyword">return</span> reporter</code></pre>
 </div>
         </li>
         
@@ -315,17 +315,17 @@ reflected in the runtime.</p>
 blockquote is removed and the editor is appended.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">findInteractiveElements = -&gt;
-  $(&quot;blockquote &gt; pre &gt; code&quot;).each -&gt;
-    codeElement = $(this)
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">findInteractiveElements</span></span> = -&gt;
+  $(<span class="string">"blockquote &gt; pre &gt; code"</span>).each -&gt;
+    codeElement = $(<span class="keyword">this</span>)
 
     code = codeElement.text()
 
-    if shebang = readShebang(code)
-      # Skip any we don&#39;t know about right now, we may know about them later
-      return unless runners[shebang]
+    <span class="keyword">if</span> shebang = readShebang(code)
+      <span class="comment"># Skip any we don't know about right now, we may know about them later</span>
+      <span class="keyword">return</span> <span class="keyword">unless</span> runners[shebang]
 
-      code = code.split(&quot;\n&quot;)[1..].join(&quot;\n&quot;)
+      code = code.split(<span class="string">"\n"</span>)[<span class="number">1.</span>.].join(<span class="string">"\n"</span>)
 
       blockQuoteElement = codeElement.parent().parent()
 
@@ -346,7 +346,7 @@ blockquote is removed and the editor is appended.</p>
               <p>Expose a global object so that we can register runners based on shebangs.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">runners = {}
+            <div class="content"><pre><code class="lang-coffeescript">runners = {}
 
 (window ? global).Interactive =
   register: (name, runner) -&gt;
@@ -366,10 +366,10 @@ blockquote is removed and the editor is appended.</p>
 <p>Auto adjust the hegiht of the example textareas.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">    $(&#39;#container&#39;).on(&#39;keyup&#39;, &#39;textarea&#39;, -&gt;
-        $(this).height 0
-        $(this).height @scrollHeight
-    ).find(&#39;textarea&#39;).keyup()</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">    $(<span class="string">'#container'</span>).<span class="literal">on</span>(<span class="string">'keyup'</span>, <span class="string">'textarea'</span>, -&gt;
+        $(<span class="keyword">this</span>).height <span class="number">0</span>
+        $(<span class="keyword">this</span>).height <span class="property">@scrollHeight</span>
+    ).find(<span class="string">'textarea'</span>).keyup()</code></pre>
 </div>
         </li>
         
@@ -383,14 +383,14 @@ blockquote is removed and the editor is appended.</p>
 this through one of the two bootstrap handler available.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">exec = ({source, code, editorElement, runtimeElement}) -&gt;
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">exec</span></span> = ({source, code, editorElement, runtimeElement}) -&gt;
   runtimeElement.remove()
-  editorElement.replaceWith $ &quot;&lt;pre&gt;&quot;,
+  editorElement.replaceWith $ <span class="string">"&lt;pre&gt;"</span>,
     text: source
 
   setTimeout -&gt;
     Function(code)()
-  , 0</code></pre>
+  , <span class="number">0</span></code></pre>
 </div>
         </li>
         
@@ -404,7 +404,7 @@ this through one of the two bootstrap handler available.</p>
 own handlers that run during the viewing of your documentation.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">Interactive.register &quot;setup&quot;, (params) -&gt;
+            <div class="content"><pre><code class="lang-coffeescript">Interactive.register <span class="string">"setup"</span>, (params) -&gt;
   params.code = CoffeeScript.compile(params.source)
   exec params</code></pre>
 </div>
@@ -419,7 +419,7 @@ own handlers that run during the viewing of your documentation.</p>
               <p><code>setup-js</code> can be used to execute JS code handlers rather than CoffeeScript</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">Interactive.register &quot;setup-js&quot;, (params) -&gt;
+            <div class="content"><pre><code class="lang-coffeescript">Interactive.register <span class="string">"setup-js"</span>, (params) -&gt;
   params.code = params.source
   exec params</code></pre>
 </div>
@@ -437,7 +437,7 @@ started. This will find any <code>setup</code> or <code>setup-js</code> handlers
 to create any interactive editors that may match it.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">findInteractiveElements()</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">findInteractiveElements()</code></pre>
 </div>
         </li>
         
@@ -450,7 +450,7 @@ to create any interactive editors that may match it.</p>
               <h2 id="special-thanks">Special Thanks</h2>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -471,7 +471,7 @@ to be rather that what it is.</p>
 <h2 id="final-thoughts">Final Thoughts</h2>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
@@ -485,7 +485,7 @@ to be rather that what it is.</p>
               <p>Living things are interesting, software shouldn&#39;t be dead.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffee">
+            <div class="content"><pre><code class="lang-coffeescript">
 </code></pre>
 </div>
         </li>
