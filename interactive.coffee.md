@@ -1,25 +1,12 @@
 Interactive Documentation
 =========================
 
-Docco is great for documentation, but what is even greater is being able to
-interact with the systems in context. So let's do that.
+Docco is great for documentation within the context of the implementation, but
+what is even greater is being able to interact with the systems we create witin
+the entirety of their context. So let's do it. Let's go all the way.
 
-This interactive documentation is meant to run on an html page and depends on
-having access to Zepto or jQuery.
-
-----
-
-A regular non-interactive block quote looks like this:
-
->     # A regular blockquoted text, won't be interactive
-
-----
-
-An interactive example is blockquoted code with a shebang
-on the first line.
-
-The shebang determines what interactive renderer to run, but is not displayed in
-the editor.
+Before you stands a simple interactive editor that echos the result of its
+JavaScript code into the output area on the right.
 
 >     #! echo
 >     "I'm an example that echos " +
@@ -28,25 +15,76 @@ the editor.
 
 ----
 
-Another example illustrating the CoffeeScript compiler.
+Another simple example which shows the output of running the CoffeeScript
+compiler on the given code.
 
 >     #! coffee
 >     (x) -> x * x
 
 ----
 
+An interactive example is created from blockquoted code sections in your
+literate coding style files. The trick to making it interactive is adding a
+shebang on the first line.
+
+The shebang determines what interactive renderer to run, but is not displayed in
+the editor.
+
+----
+
+>     #! shebang
+>     If the shebang is not known, the example
+>     simply remains as blockquoted text.
+
+----
+
+Registering handlers
+--------------------
+
+In order for these editors to work we need to register the handlers to create
+them.
+
+Here we bind the `echo` handler:
+
+>     #! setup
+>     Interactive.register "echo", ({source, runtimeElement}) ->
+>       runtimeElement.empty().append $ "<pre>",
+>         text: eval(source)
+
+----
+
+Here we bind the `coffee` handler:
+
+>     #! setup
+>     Interactive.register "coffee", ({source, runtimeElement}) ->
+>       runtimeElement.empty().append $ "<pre>",
+>         text: CoffeeScript.compile(source, bare: true)
+
+----
+
+In your own documentation it is probably better to register your handlers near
+the bottom because you wouldn't want them to distract from the primary goal of
+your project.
+
 Implementation
 --------------
 
-In order to do that we need to be able to create an editor. The code is the
-initial contents of the editor and the destination is what element we should
-append it to.
+The primary thing that we need to be able to do is create an editor. The code
+is the initial contents of the editor, the `shebang` is what runtime to execute,
+and the `section` is the section element this editor came from.
+
+We append the interactive widget after section the editor came from so that
+it can span the whole screen and won't interfere with any comments or code.
+
+You may have noticed looking through the source that there are many section
+breaks. This keeps the editors from getting weird, which they will do if there
+are two editors created from in the same section.
 
 The editor is composed of a text editor where the example code can be modified
 and a runtime element where the output can be reported or visualized in real
 time.
 
-    createEditor = (code, shebang, destination) ->
+    createEditor = (code, shebang, section) ->
       exampleSection = $ "<li>",
         class: "example"
 
@@ -69,7 +107,7 @@ time.
       exampleSection.append(annotationElement)
       exampleSection.append(contentElement)
 
-      destination.after(exampleSection)
+      section.after(exampleSection)
 
       bindUpdates(shebang, editorElement, runtimeElement)
 
@@ -82,22 +120,26 @@ instantly.
         source = editorElement.val()
 
         try
-          Interactive.run(shebang, source, runtimeElement)
+          runners[shebang]({
+            editorElement
+            source
+            runtimeElement
+          })
           report.clear()
         catch e
           report(e)
+
+A helper to pull the `shebang` from the sample code areas.
 
     readShebang = (source) ->
       if match = (source.match /^\#\! (.*)\n/)
         match[1]
 
-Present any error encountered to the user.
+Present any error encountered to the user and display them right next to the
+editor area.
 
     ErrorReporter = (editor) ->
       reporter = (error) ->
-
-Display errors right next to the editor area.
-
         if editor.next().is("p.error")
           editor.next().text(error)
         else
@@ -113,6 +155,32 @@ Display errors right next to the editor area.
 
       return reporter
 
+The editor includes an interactive runtime so that changes in the code will be
+reflected in the runtime.
+
+We're counting on any blockquoted code to be an interactive example. The
+blockquote is removed and the editor is appended.
+
+    findInteractiveElements = ->
+      $("blockquote > pre > code").each ->
+        codeElement = $(this)
+
+        code = codeElement.text()
+
+        if shebang = readShebang(code)
+          # Skip any we don't know about right now, we may know about them later
+          return unless runners[shebang]
+
+          code = code.split("\n")[1..].join("\n")
+
+          blockQuoteElement = codeElement.parent().parent()
+
+          sectionElement = blockQuoteElement.parent().parent()
+
+          blockQuoteElement.remove()
+
+          createEditor code, shebang, sectionElement
+
 Expose a global object so that we can register runners based on shebangs.
 
     runners = {}
@@ -121,32 +189,7 @@ Expose a global object so that we can register runners based on shebangs.
       register: (name, runner) ->
         runners[name] = runner
 
-      run: (name, code, element) ->
-        runners[name](code, element)
-
-      init: ->
-
-The editor includes an interactive runtime so that changes in the code will be
-reflected in the runtime.
-
-We're counting on any blockquoted code to be an interactive example. The
-blockquote is removed and the editor is appended.
-
-        $("blockquote > pre > code").each ->
-          codeElement = $(this)
-
-          code = codeElement.text()
-
-          if shebang = readShebang(code)
-            code = code.split("\n")[1..].join("\n")
-
-            blockQuoteElement = codeElement.parent().parent()
-
-            sectionElement = blockQuoteElement.parent().parent()
-
-            blockQuoteElement.remove()
-
-            createEditor code, shebang, sectionElement
+        findInteractiveElements()
 
 And have a live updating visual display component.
 
@@ -157,18 +200,50 @@ Auto adjust the hegiht of the example textareas.
             $(this).height @scrollHeight
         ).find('textarea').keyup()
 
-A demonstraction runner, treats the example as js and echos the result to a
-pre tag.
+To make docs interactive they need to register their own handlers. They can do
+this through one of the two bootstrap handler available.
 
-    Interactive.register "echo", (source, parent) ->
-      parent.empty().append $ "<pre>",
-        text: eval(source)
+    exec = ({source, code, editorElement, runtimeElement}) ->
+      runtimeElement.remove()
+      editorElement.replaceWith $ "<pre>",
+        text: source
 
-    Interactive.register "coffee", (source, parent) ->
-      parent.empty().append $ "<pre>",
-        text: CoffeeScript.compile(source, bare: true)
+      setTimeout ->
+        Function(code)()
+      , 0
 
-We probably want to let whoever includes this call init after they register
-their runners.
+`setup` executes the given block of CoffeeScript code. Use this to register your
+own handlers that run during the viewing of your documentation.
 
-    Interactive.init()
+    Interactive.register "setup", (params) ->
+      params.code = CoffeeScript.compile(params.source)
+      exec params
+
+`setup-js` can be used to execute JS code handlers rather than CoffeeScript
+
+    Interactive.register "setup-js", (params) ->
+      params.code = params.source
+      exec params
+
+We need to call `findInteractiveElements` at least once to get everything
+started. This will find any `setup` or `setup-js` handlers and execute them.
+
+Any time a new handler is registered `findInteractiveElements` is called again
+to create any interactive editors that may match it.
+
+    findInteractiveElements()
+
+Special Thanks
+--------------
+
+- Alan Kay
+- Bret Victor
+- Jeremy Ashkenas
+
+... and tons of others who have cared enough about what computing is supposed
+to be rather that what it is.
+
+Final Thoughts
+--------------
+
+Living things are interesting, software shouldn't be dead.
