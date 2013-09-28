@@ -2,7 +2,7 @@ Interactive Documentation
 =========================
 
 Docco is great for documentation within the context of the implementation, but
-what is even greater is being able to interact with the systems we create witin
+what is even greater is being able to interact with the systems we create within
 the entirety of their context. So let's do it. Let's go all the way.
 
 Before you stands a simple interactive editor that echos the result of its
