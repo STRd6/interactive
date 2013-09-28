@@ -19,6 +19,11 @@
       "path": "interactive",
       "content": "(function() {\n  var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;\n\n  createEditor = function(code, shebang, section) {\n    var annotationElement, contentElement, editorElement, exampleSection, runtimeElement;\n    exampleSection = $(\"<li>\", {\n      \"class\": \"example\"\n    });\n    annotationElement = $(\"<div>\", {\n      \"class\": \"annotation\"\n    });\n    editorElement = $(\"<textarea>\", {\n      \"class\": \"annotation\",\n      text: code\n    });\n    contentElement = $(\"<div>\", {\n      \"class\": \"content\"\n    });\n    runtimeElement = $(\"<div>\", {\n      \"class\": \"output\"\n    });\n    contentElement.append(runtimeElement);\n    annotationElement.append(editorElement);\n    exampleSection.append(annotationElement);\n    exampleSection.append(contentElement);\n    section.after(exampleSection);\n    return bindUpdates(shebang, editorElement, runtimeElement);\n  };\n\n  bindUpdates = function(shebang, editorElement, runtimeElement) {\n    return editorElement.on(\"keyup\", function() {\n      var e, report, source;\n      report = ErrorReporter(editorElement);\n      source = editorElement.val();\n      try {\n        runners[shebang]({\n          editorElement: editorElement,\n          source: source,\n          runtimeElement: runtimeElement\n        });\n        return report.clear();\n      } catch (_error) {\n        e = _error;\n        return report(e);\n      }\n    });\n  };\n\n  readShebang = function(source) {\n    var match;\n    if (match = source.match(/^\\#\\! (.*)\\n/)) {\n      return match[1];\n    }\n  };\n\n  ErrorReporter = function(editor) {\n    var reporter;\n    reporter = function(error) {\n      var errorParagraph;\n      if (editor.next().is(\"p.error\")) {\n        return editor.next().text(error);\n      } else {\n        errorParagraph = $(\"<p>\", {\n          \"class\": \"error\",\n          text: error.toString()\n        });\n        return editor.after(errorParagraph);\n      }\n    };\n    reporter.clear = function() {\n      if (editor.next().is(\"p.error\")) {\n        return editor.next().remove();\n      }\n    };\n    return reporter;\n  };\n\n  findInteractiveElements = function() {\n    return $(\"blockquote > pre > code\").each(function() {\n      var blockQuoteElement, code, codeElement, sectionElement, shebang;\n      codeElement = $(this);\n      code = codeElement.text();\n      if (shebang = readShebang(code)) {\n        if (!runners[shebang]) {\n          return;\n        }\n        code = code.split(\"\\n\").slice(1).join(\"\\n\");\n        blockQuoteElement = codeElement.parent().parent();\n        sectionElement = blockQuoteElement.parent().parent();\n        blockQuoteElement.remove();\n        return createEditor(code, shebang, sectionElement);\n      }\n    });\n  };\n\n  runners = {};\n\n  (typeof window !== \"undefined\" && window !== null ? window : global).Interactive = {\n    register: function(name, runner) {\n      runners[name] = runner;\n      findInteractiveElements();\n      return $('#container').on('keyup', 'textarea', function() {\n        $(this).height(0);\n        return $(this).height(this.scrollHeight);\n      }).find('textarea').keyup();\n    }\n  };\n\n  exec = function(_arg) {\n    var code, editorElement, runtimeElement, source;\n    source = _arg.source, code = _arg.code, editorElement = _arg.editorElement, runtimeElement = _arg.runtimeElement;\n    runtimeElement.remove();\n    editorElement.replaceWith($(\"<pre>\", {\n      text: source\n    }));\n    return setTimeout(function() {\n      return Function(code)();\n    }, 0);\n  };\n\n  Interactive.register(\"setup\", function(params) {\n    params.code = CoffeeScript.compile(params.source);\n    return exec(params);\n  });\n\n  Interactive.register(\"setup-js\", function(params) {\n    params.code = params.source;\n    return exec(params);\n  });\n\n  findInteractiveElements();\n\n}).call(this);\n",
       "type": "blob"
+    },
+    "pixie": {
+      "path": "pixie",
+      "content": "module.exports = {\"version\":\"0.7.0\",\"entryPoint\":\"interactive\",\"remoteDependencies\":[\"http://strd6.github.io/tempest/javascripts/envweb.js\",\"http://strd6.github.io/require/master.js\"]};",
+      "type": "blob"
     }
   },
   "entryPoint": "interactive",
@@ -34,7 +39,7 @@
     "owner": {
       "login": "STRd6",
       "id": 18894,
-      "avatar_url": "https://0.gravatar.com/avatar/33117162fff8a9cf50544a604f60c045?d=https%3A%2F%2Fidenticons.github.com%2F39df222bffe39629d904e4883eabc654.png",
+      "avatar_url": "https://1.gravatar.com/avatar/33117162fff8a9cf50544a604f60c045?d=https%3A%2F%2Fidenticons.github.com%2F39df222bffe39629d904e4883eabc654.png",
       "gravatar_id": "33117162fff8a9cf50544a604f60c045",
       "url": "https://api.github.com/users/STRd6",
       "html_url": "https://github.com/STRd6",
@@ -89,14 +94,14 @@
     "notifications_url": "https://api.github.com/repos/STRd6/interactive/notifications{?since,all,participating}",
     "labels_url": "https://api.github.com/repos/STRd6/interactive/labels{/name}",
     "created_at": "2013-09-24T22:53:30Z",
-    "updated_at": "2013-09-28T15:11:25Z",
-    "pushed_at": "2013-09-28T15:11:25Z",
+    "updated_at": "2013-09-28T15:30:03Z",
+    "pushed_at": "2013-09-28T15:30:02Z",
     "git_url": "git://github.com/STRd6/interactive.git",
     "ssh_url": "git@github.com:STRd6/interactive.git",
     "clone_url": "https://github.com/STRd6/interactive.git",
     "svn_url": "https://github.com/STRd6/interactive",
     "homepage": null,
-    "size": 444,
+    "size": 752,
     "watchers_count": 0,
     "language": "CSS",
     "has_issues": true,
