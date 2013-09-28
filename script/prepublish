@@ -1,9 +1,0 @@
-#!/bin/bash
-
-./node_modules/.bin/coffee -co dist/ interactive.coffee.md
-
-for file in dist/*.js
-do
-  ./node_modules/.bin/uglifyjs 2> /dev/null $file > tmp.js
-  mv tmp.js $file
-done

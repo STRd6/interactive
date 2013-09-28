@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-cd docs
-git add .
-git ci -am "gh-pages"
-git pull
-git push
