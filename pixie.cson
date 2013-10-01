@@ -1,6 +1,5 @@
-version: "0.7.0"
+version: "0.8.0"
 entryPoint: "interactive"
 remoteDependencies: [
-  "http://strd6.github.io/tempest/javascripts/envweb.js"
-  "http://strd6.github.io/require/master.js"
+  "http://strd6.github.io/require/v0.2.0.js"
 ]

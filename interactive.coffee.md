@@ -15,14 +15,6 @@ JavaScript code into the output area on the right.
 
 ----
 
-Another simple example which shows the output of running the CoffeeScript
-compiler on the given code.
-
->     #! coffee
->     (x) -> x * x
-
-----
-
 An interactive example is created from blockquoted code sections in your
 literate coding style files. The trick to making it interactive is adding a
 shebang on the first line.
