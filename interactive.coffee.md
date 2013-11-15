@@ -220,10 +220,13 @@ own handlers that run during the viewing of your documentation.
 We need to call `findInteractiveElements` at least once to get everything
 started. This will find any `setup` or `setup-js` handlers and execute them.
 
+We want to make sure to wait until the document is loaded first though.
+
 Any time a new handler is registered `findInteractiveElements` is called again
 to create any interactive editors that may match it.
 
-    findInteractiveElements()
+    $ ->
+      findInteractiveElements()
 
 Special Thanks
 --------------
