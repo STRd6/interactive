@@ -1,4 +1,7 @@
-window["STRd6/interactive:master"]({
+(function(pkg) {
+  // Expose a require for our package so scripts can access our modules
+  window.require = Require.generateFor(pkg);
+})({
   "version": "0.8.1",
   "source": {
     "interactive.coffee.md": {
