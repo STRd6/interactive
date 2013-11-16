@@ -1,5 +1,5 @@
 version: "0.8.1"
 entryPoint: "interactive"
 remoteDependencies: [
-  "http://strd6.github.io/require/v0.2.0.js"
+  "http://strd6.github.io/require/v0.2.2.js"
 ]
