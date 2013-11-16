@@ -193,7 +193,7 @@ Auto adjust the hegiht of the example textareas.
         ).find('textarea').keyup()
 
 To make docs interactive they need to register their own handlers. They can do
-this through one of the two bootstrap handler available.
+this through one of the two bootstrap handlers available.
 
     exec = ({source, code, editorElement, runtimeElement}) ->
       runtimeElement.remove()
