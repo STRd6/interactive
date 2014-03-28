@@ -9,7 +9,7 @@ window["distri/interactive:master"]({
     "pixie.cson": {
       "path": "pixie.cson",
       "mode": "100644",
-      "content": "version: \"0.8.3-pre.0\"\nentryPoint: \"interactive\"\n",
+      "content": "version: \"0.8.3\"\nentryPoint: \"interactive\"\n",
       "type": "blob"
     }
   },
@@ -21,14 +21,14 @@ window["distri/interactive:master"]({
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.8.3-pre.0\",\"entryPoint\":\"interactive\"};",
+      "content": "module.exports = {\"version\":\"0.8.3\",\"entryPoint\":\"interactive\"};",
       "type": "blob"
     }
   },
   "progenitor": {
     "url": "http://strd6.github.io/editor/"
   },
-  "version": "0.8.3-pre.0",
+  "version": "0.8.3",
   "entryPoint": "interactive",
   "repository": {
     "id": 13078696,
@@ -94,8 +94,8 @@ window["distri/interactive:master"]({
     "labels_url": "https://api.github.com/repos/distri/interactive/labels{/name}",
     "releases_url": "https://api.github.com/repos/distri/interactive/releases{/id}",
     "created_at": "2013-09-24T22:53:30Z",
-    "updated_at": "2014-03-20T21:26:55Z",
-    "pushed_at": "2014-03-20T21:26:55Z",
+    "updated_at": "2014-03-28T21:51:08Z",
+    "pushed_at": "2014-03-28T21:51:10Z",
     "git_url": "git://github.com/distri/interactive.git",
     "ssh_url": "git@github.com:distri/interactive.git",
     "clone_url": "https://github.com/distri/interactive.git",
