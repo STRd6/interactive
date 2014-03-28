@@ -380,13 +380,12 @@ this through one of the two bootstrap handlers available.</p>
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p><code>setup</code> executes the given block of CoffeeScript code. Use this to register your
-own handlers that run during the viewing of your documentation.</p>
+              <p>Once the document is loaded we register our handlers. Any time a new handler is 
+registered <code>findInteractiveElements</code> is called again to create any interactive 
+editors that may match it. This will then bootstrap any user defined handlers.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">Interactive.register <span class="string">"setup"</span>, (params) -&gt;
-  params.code = CoffeeScript.compile(params.source)
-  exec params</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">$ -&gt;</code></pre>
 </div>
         </li>
         
@@ -396,12 +395,13 @@ own handlers that run during the viewing of your documentation.</p>
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p><code>setup-js</code> can be used to execute JS code handlers rather than CoffeeScript</p>
+              <p><code>setup</code> executes the given block of CoffeeScript code. Use this to register your
+own handlers that run during the viewing of your documentation.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">Interactive.register <span class="string">"setup-js"</span>, (params) -&gt;
-  params.code = params.source
-  exec params</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">  Interactive.register <span class="string">"setup"</span>, (params) -&gt;
+    params.code = CoffeeScript.compile(params.source)
+    exec params</code></pre>
 </div>
         </li>
         
@@ -411,15 +411,12 @@ own handlers that run during the viewing of your documentation.</p>
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>We need to call <code>findInteractiveElements</code> at least once to get everything
-started. This will find any <code>setup</code> or <code>setup-js</code> handlers and execute them.</p>
-<p>We want to make sure to wait until the document is loaded first though.</p>
-<p>Any time a new handler is registered <code>findInteractiveElements</code> is called again
-to create any interactive editors that may match it.</p>
+              <p><code>setup-js</code> can be used to execute JS code handlers rather than CoffeeScript</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">$ -&gt;
-  findInteractiveElements()</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">  Interactive.register <span class="string">"setup-js"</span>, (params) -&gt;
+    params.code = params.source
+    exec params</code></pre>
 </div>
         </li>
         
