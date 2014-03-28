@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="http://strd6.github.io/cdn/parallel/docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    <ul class="sections">
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="interactive-documentation">Interactive Documentation</h1>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Docco is great for documentation within the context of the implementation, but
+what is even greater is being able to interact with the systems we create within
+the entirety of their context. So let&#39;s do it. Let&#39;s go all the way.</p>
+<p>Before you stands a simple interactive editor that echos the result of its
+JavaScript code into the output area on the right.</p>
+<blockquote>
+<pre><code>#! echo
+&quot;I&#39;m an example that echos &quot; +
+&quot;the result of JavaScript &quot; +
+&quot;code.&quot;</code></pre>
+</blockquote>
+<hr>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>An interactive example is created from blockquoted code sections in your
+literate coding style files. The trick to making it interactive is adding a
+shebang on the first line.</p>
+<p>The shebang determines what interactive renderer to run, but is not displayed in
+the editor.</p>
+<hr>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <blockquote>
+<pre><code>#! shebang
+If the shebang is not known, the example
+simply remains as blockquoted text.</code></pre>
+</blockquote>
+<hr>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h2 id="registering-handlers">Registering handlers</h2>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>In order for these editors to work we need to register the handlers to create
+them.</p>
+<p>Here we bind the <code>echo</code> handler:</p>
+<blockquote>
+<pre><code>#! setup
+Interactive.register &quot;echo&quot;, ({source, runtimeElement}) -&gt;
+  runtimeElement.empty().append $ &quot;&lt;pre&gt;&quot;,
+    text: eval(source)</code></pre>
+</blockquote>
+<hr>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Here we bind the <code>coffee</code> handler:</p>
+<blockquote>
+<pre><code>#! setup
+Interactive.register &quot;coffee&quot;, ({source, runtimeElement}) -&gt;
+  runtimeElement.empty().append $ &quot;&lt;pre&gt;&quot;,
+    text: CoffeeScript.compile(source, bare: true)</code></pre>
+</blockquote>
+<hr>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>In your own documentation it is probably better to register your handlers near
+the bottom because you wouldn&#39;t want them to distract from the primary goal of
+your project.</p>
+<h2 id="implementation">Implementation</h2>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>The primary thing that we need to be able to do is create an editor. The code
+is the initial contents of the editor, the <code>shebang</code> is what runtime to execute,
+and the <code>section</code> is the section element this editor came from.</p>
+<p>We append the interactive widget after section the editor came from so that
+it can span the whole screen and won&#39;t interfere with any comments or code.</p>
+<p>You may have noticed looking through the source that there are many section
+breaks. This keeps the editors from getting weird, which they will do if there
+are two editors created from in the same section.</p>
+<p>The editor is composed of a text editor where the example code can be modified
+and a runtime element where the output can be reported or visualized in real
+time.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">createEditor</span></span> = (code, shebang, section) -&gt;
+  exampleSection = $ <span class="string">"&lt;li&gt;"</span>,
+    class: <span class="string">"example"</span>
+
+  annotationElement = $ <span class="string">"&lt;div&gt;"</span>,
+    class: <span class="string">"annotation"</span>
+
+  editorElement = $ <span class="string">"&lt;textarea&gt;"</span>,
+    class: <span class="string">"annotation"</span>
+    text: code
+
+  contentElement = $ <span class="string">"&lt;div&gt;"</span>,
+    class: <span class="string">"content"</span>
+
+  runtimeElement = $ <span class="string">"&lt;div&gt;"</span>,
+    class: <span class="string">"output"</span>
+
+  contentElement.append(runtimeElement)
+
+  annotationElement.append(editorElement)
+  exampleSection.append(annotationElement)
+  exampleSection.append(contentElement)
+
+  section.after(exampleSection)
+
+  bindUpdates(shebang, editorElement, runtimeElement)</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Listen to keyup events from an editor and reflect the changes in the example
+instantly.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">bindUpdates</span></span> = (shebang, editorElement, runtimeElement) -&gt;
+  editorElement.<span class="literal">on</span> <span class="string">"keyup"</span>, -&gt;
+    report = ErrorReporter(editorElement)
+    source = editorElement.val()
+
+    <span class="keyword">try</span>
+      runners[shebang]({
+        editorElement
+        source
+        runtimeElement
+      })
+      report.clear()
+    <span class="keyword">catch</span> e
+      report(e)</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>A helper to pull the <code>shebang</code> from the sample code areas.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">readShebang</span></span> = (source) -&gt;
+  <span class="keyword">if</span> match = (source.match <span class="regexp">/^\#\! (.*)\n/</span>)
+    match[<span class="number">1</span>]</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Present any error encountered to the user and display them right next to the
+editor area.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">ErrorReporter</span></span> = (editor) -&gt;
+  <span class="function"><span class="title">reporter</span></span> = (error) -&gt;
+    <span class="keyword">if</span> editor.next().<span class="keyword">is</span>(<span class="string">"p.error"</span>)
+      editor.next().text(error)
+    <span class="keyword">else</span>
+      errorParagraph = $ <span class="string">"&lt;p&gt;"</span>,
+        class: <span class="string">"error"</span>
+        text: error.toString()
+
+      editor.after(errorParagraph)
+
+  reporter.<span class="function"><span class="title">clear</span></span> = -&gt;
+    <span class="keyword">if</span> editor.next().<span class="keyword">is</span>(<span class="string">"p.error"</span>)
+      editor.next().remove()
+
+  <span class="keyword">return</span> reporter</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>The editor includes an interactive runtime so that changes in the code will be
+reflected in the runtime.</p>
+<p>We&#39;re counting on any blockquoted code to be an interactive example. The
+blockquote is removed and the editor is appended.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">findInteractiveElements</span></span> = -&gt;
+  $(<span class="string">"blockquote &gt; pre &gt; code"</span>).each -&gt;
+    codeElement = $(<span class="keyword">this</span>)
+
+    code = codeElement.text()
+
+    <span class="keyword">if</span> shebang = readShebang(code)
+      <span class="comment"># Skip any we don't know about right now, we may know about them later</span>
+      <span class="keyword">return</span> <span class="keyword">unless</span> runners[shebang]
+
+      code = code.split(<span class="string">"\n"</span>)[<span class="number">1.</span>.].join(<span class="string">"\n"</span>)
+
+      blockQuoteElement = codeElement.parent().parent()
+
+      sectionElement = blockQuoteElement.parent().parent()
+
+      blockQuoteElement.remove()
+
+      createEditor code, shebang, sectionElement</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Expose a global object so that we can register runners based on shebangs.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">runners = {}
+
+(window ? global).Interactive =
+  register: (name, runner) -&gt;
+    runners[name] = runner
+
+    findInteractiveElements()</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>And have a live updating visual display component.</p>
+<p>Auto adjust the hegiht of the example textareas.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">    $(<span class="string">'#container'</span>).<span class="literal">on</span>(<span class="string">'keyup'</span>, <span class="string">'textarea'</span>, -&gt;
+        $(<span class="keyword">this</span>).height <span class="number">0</span>
+        $(<span class="keyword">this</span>).height <span class="property">@scrollHeight</span>
+    ).find(<span class="string">'textarea'</span>).keyup()</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>To make docs interactive they need to register their own handlers. They can do
+this through one of the two bootstrap handlers available.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">exec</span></span> = ({source, code, editorElement, runtimeElement}) -&gt;
+  runtimeElement.remove()
+  editorElement.replaceWith $ <span class="string">"&lt;pre&gt;"</span>,
+    text: source
+
+  setTimeout -&gt;
+    Function(code)()
+  , <span class="number">0</span></code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Once the document is loaded we register our handlers. Any time a new handler is 
+registered <code>findInteractiveElements</code> is called again to create any interactive 
+editors that may match it. This will then bootstrap any user defined handlers.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">$ -&gt;</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p><code>setup</code> executes the given block of CoffeeScript code. Use this to register your
+own handlers that run during the viewing of your documentation.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">  Interactive.register <span class="string">"setup"</span>, (params) -&gt;
+    params.code = CoffeeScript.compile(params.source)
+    exec params</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p><code>setup-js</code> can be used to execute JS code handlers rather than CoffeeScript</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">  Interactive.register <span class="string">"setup-js"</span>, (params) -&gt;
+    params.code = params.source
+    exec params</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <h2 id="special-thanks">Special Thanks</h2>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <ul>
+<li>Alan Kay</li>
+<li>Bret Victor</li>
+<li>Jeremy Ashkenas</li>
+</ul>
+<p>... and tons of others who have cared enough about what computing is supposed
+to be rather that what it is.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Living things are interesting, software shouldn&#39;t be dead.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
+</div>
+        </li>
+        
+    </ul>
+  </div>
+  <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script><script>
+  (function() {
+  var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
+
+  createEditor = function(code, shebang, section) {
+    var annotationElement, contentElement, editorElement, exampleSection, runtimeElement;
+    exampleSection = $("<li>", {
+      "class": "example"
+    });
+    annotationElement = $("<div>", {
+      "class": "annotation"
+    });
+    editorElement = $("<textarea>", {
+      "class": "annotation",
+      text: code
+    });
+    contentElement = $("<div>", {
+      "class": "content"
+    });
+    runtimeElement = $("<div>", {
+      "class": "output"
+    });
+    contentElement.append(runtimeElement);
+    annotationElement.append(editorElement);
+    exampleSection.append(annotationElement);
+    exampleSection.append(contentElement);
+    section.after(exampleSection);
+    return bindUpdates(shebang, editorElement, runtimeElement);
+  };
+
+  bindUpdates = function(shebang, editorElement, runtimeElement) {
+    return editorElement.on("keyup", function() {
+      var e, report, source;
+      report = ErrorReporter(editorElement);
+      source = editorElement.val();
+      try {
+        runners[shebang]({
+          editorElement: editorElement,
+          source: source,
+          runtimeElement: runtimeElement
+        });
+        return report.clear();
+      } catch (_error) {
+        e = _error;
+        return report(e);
+      }
+    });
+  };
+
+  readShebang = function(source) {
+    var match;
+    if (match = source.match(/^\#\! (.*)\n/)) {
+      return match[1];
+    }
+  };
+
+  ErrorReporter = function(editor) {
+    var reporter;
+    reporter = function(error) {
+      var errorParagraph;
+      if (editor.next().is("p.error")) {
+        return editor.next().text(error);
+      } else {
+        errorParagraph = $("<p>", {
+          "class": "error",
+          text: error.toString()
+        });
+        return editor.after(errorParagraph);
+      }
+    };
+    reporter.clear = function() {
+      if (editor.next().is("p.error")) {
+        return editor.next().remove();
+      }
+    };
+    return reporter;
+  };
+
+  findInteractiveElements = function() {
+    return $("blockquote > pre > code").each(function() {
+      var blockQuoteElement, code, codeElement, sectionElement, shebang;
+      codeElement = $(this);
+      code = codeElement.text();
+      if (shebang = readShebang(code)) {
+        if (!runners[shebang]) {
+          return;
+        }
+        code = code.split("\n").slice(1).join("\n");
+        blockQuoteElement = codeElement.parent().parent();
+        sectionElement = blockQuoteElement.parent().parent();
+        blockQuoteElement.remove();
+        return createEditor(code, shebang, sectionElement);
+      }
+    });
+  };
+
+  runners = {};
+
+  (typeof window !== "undefined" && window !== null ? window : global).Interactive = {
+    register: function(name, runner) {
+      runners[name] = runner;
+      findInteractiveElements();
+      return $('#container').on('keyup', 'textarea', function() {
+        $(this).height(0);
+        return $(this).height(this.scrollHeight);
+      }).find('textarea').keyup();
+    }
+  };
+
+  exec = function(_arg) {
+    var code, editorElement, runtimeElement, source;
+    source = _arg.source, code = _arg.code, editorElement = _arg.editorElement, runtimeElement = _arg.runtimeElement;
+    runtimeElement.remove();
+    editorElement.replaceWith($("<pre>", {
+      text: source
+    }));
+    return setTimeout(function() {
+      return Function(code)();
+    }, 0);
+  };
+
+  Interactive.register("setup", function(params) {
+    params.code = CoffeeScript.compile(params.source);
+    return exec(params);
+  });
+
+  Interactive.register("setup-js", function(params) {
+    params.code = params.source;
+    return exec(params);
+  });
+
+  $(function() {
+    return findInteractiveElements();
+  });
+
+}).call(this);
+
+//# sourceURL=interactive.coffee
+</script><script src="package.js"></script>
+</body>
+</html>

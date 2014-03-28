@@ -9,7 +9,7 @@ window["distri/interactive:v0.8.3-pre.0"]({
     "pixie.cson": {
       "path": "pixie.cson",
       "mode": "100644",
-      "content": "version: \"0.8.3-pre.0\"\nentryPoint: \"interactive\"\n",
+      "content": "version: \"0.8.3\"\nentryPoint: \"interactive\"\n",
       "type": "blob"
     }
   },
@@ -21,14 +21,14 @@ window["distri/interactive:v0.8.3-pre.0"]({
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.8.3-pre.0\",\"entryPoint\":\"interactive\"};",
+      "content": "module.exports = {\"version\":\"0.8.3\",\"entryPoint\":\"interactive\"};",
       "type": "blob"
     }
   },
   "progenitor": {
     "url": "http://strd6.github.io/editor/"
   },
-  "version": "0.8.3-pre.0",
+  "version": "0.8.3",
   "entryPoint": "interactive",
   "repository": {
     "id": 13078696,
