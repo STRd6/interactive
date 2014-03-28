@@ -204,29 +204,24 @@ this through one of the two bootstrap handlers available.
         Function(code)()
       , 0
 
+Once the document is loaded we register our handlers. Any time a new handler is 
+registered `findInteractiveElements` is called again to create any interactive 
+editors that may match it. This will then bootstrap any user defined handlers.
+
+    $ ->
+    
 `setup` executes the given block of CoffeeScript code. Use this to register your
 own handlers that run during the viewing of your documentation.
 
-    Interactive.register "setup", (params) ->
-      params.code = CoffeeScript.compile(params.source)
-      exec params
+      Interactive.register "setup", (params) ->
+        params.code = CoffeeScript.compile(params.source)
+        exec params
 
 `setup-js` can be used to execute JS code handlers rather than CoffeeScript
 
-    Interactive.register "setup-js", (params) ->
-      params.code = params.source
-      exec params
-
-We need to call `findInteractiveElements` at least once to get everything
-started. This will find any `setup` or `setup-js` handlers and execute them.
-
-We want to make sure to wait until the document is loaded first though.
-
-Any time a new handler is registered `findInteractiveElements` is called again
-to create any interactive editors that may match it.
-
-    $ ->
-      findInteractiveElements()
+      Interactive.register "setup-js", (params) ->
+        params.code = params.source
+        exec params
 
 Special Thanks
 --------------
