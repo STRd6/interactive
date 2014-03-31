@@ -196,7 +196,7 @@ To make docs interactive they need to register their own handlers. They can do
 this through one of the two bootstrap handlers available.
 
     exec = ({source, code, editorElement, runtimeElement}) ->
-      runtimeElement.remove()
+      runtimeElement.parent().remove()
       editorElement.replaceWith $ "<pre>",
         text: source
 
@@ -204,12 +204,12 @@ this through one of the two bootstrap handlers available.
         Function(code)()
       , 0
 
-Once the document is loaded we register our handlers. Any time a new handler is 
-registered `findInteractiveElements` is called again to create any interactive 
+Once the document is loaded we register our handlers. Any time a new handler is
+registered `findInteractiveElements` is called again to create any interactive
 editors that may match it. This will then bootstrap any user defined handlers.
 
     $ ->
-    
+
 `setup` executes the given block of CoffeeScript code. Use this to register your
 own handlers that run during the viewing of your documentation.
 
