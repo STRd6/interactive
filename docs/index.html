@@ -364,7 +364,7 @@ this through one of the two bootstrap handlers available.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">exec</span></span> = ({source, code, editorElement, runtimeElement}) -&gt;
-  runtimeElement.remove()
+  runtimeElement.parent().remove()
   editorElement.replaceWith $ <span class="string">"&lt;pre&gt;"</span>,
     text: source
 
@@ -380,8 +380,8 @@ this through one of the two bootstrap handlers available.</p>
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>Once the document is loaded we register our handlers. Any time a new handler is 
-registered <code>findInteractiveElements</code> is called again to create any interactive 
+              <p>Once the document is loaded we register our handlers. Any time a new handler is
+registered <code>findInteractiveElements</code> is called again to create any interactive
 editors that may match it. This will then bootstrap any user defined handlers.</p>
 
             </div>
@@ -593,23 +593,19 @@ to be rather that what it is.</p>
     }, 0);
   };
 
-  Interactive.register("setup", function(params) {
-    params.code = CoffeeScript.compile(params.source);
-    return exec(params);
-  });
-
-  Interactive.register("setup-js", function(params) {
-    params.code = params.source;
-    return exec(params);
-  });
-
   $(function() {
-    return findInteractiveElements();
+    Interactive.register("setup", function(params) {
+      params.code = CoffeeScript.compile(params.source);
+      return exec(params);
+    });
+    return Interactive.register("setup-js", function(params) {
+      params.code = params.source;
+      return exec(params);
+    });
   });
 
 }).call(this);
 
-//# sourceURL=interactive.coffee
 </script><script src="package.js"></script>
 </body>
 </html>
